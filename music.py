@@ -174,7 +174,7 @@ def second_half(str):
     return song
 
 
-def main(path, p):
+def main(path, n, p):
     files = [".".join(f.split(".")[:-1]) for f in listdir(path) if isfile(join(path, f))]
     stop_threads = p
     if ~p:
@@ -190,6 +190,7 @@ def main(path, p):
         if metadata.secondary_artistes:
             meta['artist'] = metadata.secondary_artistes
         meta['albumartist'] = metadata.main_artist
+        meta['album'] = str(n+i)
         meta.save(full_path, 2)
         rename(full_path, path + '/' + metadata.song_name + '.mp3')
     stop_threads = True
@@ -197,7 +198,8 @@ def main(path, p):
 
 parser = argparse.ArgumentParser(description='creates metadata for mp3 files')
 parser.add_argument('path', metavar='', type=str, help='the containing folder`s path')
+parser.add_argument('-n', metavar='', type=int, help='first album number')
 parser.add_argument('-p', '-print', action='store_true', help='true = print all mp3 metadata')
 args = parser.parse_args()
 
-main(args.path, True) if args.p else main(args.path, False)
+main(args.path, args.n, True) if args.p else main(args.path, args.n, False)
