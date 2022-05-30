@@ -174,7 +174,7 @@ def second_half(str):
     return song
 
 
-def main(path, n, p):
+def main(path, p, n=0):
     files = [".".join(f.split(".")[:-1]) for f in listdir(path) if isfile(join(path, f))]
     stop_threads = p
     if ~p:
@@ -202,4 +202,4 @@ parser.add_argument('-n', metavar='', type=int, help='first album number')
 parser.add_argument('-p', '-print', action='store_true', help='true = print all mp3 metadata')
 args = parser.parse_args()
 
-main(args.path, args.n, True) if args.p else main(args.path, args.n, False)
+main(args.path, True, args.n) if args.p else main(args.path, False, args.n)
